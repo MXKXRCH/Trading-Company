@@ -1,7 +1,7 @@
-package ru.mak.TradingCompany.repo;
+package ru.mak.tradingCompany.repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.mak.TradingCompany.entity.Client;
+import ru.mak.tradingCompany.entity.Client;
 
 public interface ClientRepo extends JpaRepository<Client, Long> {
 }

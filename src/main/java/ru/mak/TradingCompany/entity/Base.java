@@ -1,16 +1,14 @@
-package ru.mak.TradingCompany.entity;
+package ru.mak.tradingCompany.entity;
 
-import lombok.*;
+import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
-@Entity
-@Table(name = "order")
-@AllArgsConstructor
-@NoArgsConstructor(access= AccessLevel.PRIVATE, force=true)
-@Getter
-@Setter
-@ToString
+@MappedSuperclass
+@Data
 public class Base {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

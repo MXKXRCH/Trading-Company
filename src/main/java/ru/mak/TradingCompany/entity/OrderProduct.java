@@ -1,16 +1,14 @@
-package ru.mak.TradingCompany.entity;
+package ru.mak.tradingCompany.entity;
 
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
+@EqualsAndHashCode(callSuper = true)
+@Data
 @Entity
-@Table(name = "order_product")
-@AllArgsConstructor
-@NoArgsConstructor(access= AccessLevel.PRIVATE, force=true)
-@Getter
-@Setter
-@ToString
+@Table(name = "order_product_tb")
 public class OrderProduct extends Base {
     @ManyToOne
     @JoinColumn(name="order_id")
@@ -21,5 +19,5 @@ public class OrderProduct extends Base {
     private Product product;
 
     @Column(name = "amount")
-    private Float amount;
+    private Integer amount;
 }

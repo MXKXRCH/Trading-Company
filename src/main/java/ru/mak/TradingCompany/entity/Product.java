@@ -1,17 +1,15 @@
-package ru.mak.TradingCompany.entity;
+package ru.mak.tradingCompany.entity;
 
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.Set;
 
+@EqualsAndHashCode(callSuper = true)
+@Data
 @Entity
-@Table(name = "product")
-@AllArgsConstructor
-@NoArgsConstructor(access= AccessLevel.PRIVATE, force=true)
-@Getter
-@Setter
-@ToString
+@Table(name = "product_tb")
 public class Product extends Base {
     @Column(name = "name")
     private String name;
