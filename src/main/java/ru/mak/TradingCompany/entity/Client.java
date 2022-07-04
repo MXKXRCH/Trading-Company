@@ -3,7 +3,7 @@ package ru.mak.TradingCompany.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "client")
@@ -22,6 +22,6 @@ public class Client extends Base {
     @Column(name = "address")
     private String address;
 
-    @OneToMany(mappedBy = "client")
-    private List<Order> orders;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
+    private Set<Order> orders;
 }

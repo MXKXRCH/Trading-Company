@@ -4,7 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "order")
@@ -31,6 +31,13 @@ public class Order extends Base {
     @JoinColumn(name="employee_id")
     private Employee employee;
 
-    @OneToMany(mappedBy = "order")
-    private List<OrderProduct> orderProducts;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
+    private Set<OrderProduct> orderProducts;
+
+    public void updateTotalPrice() {
+        totalPrice = 0f;
+        for (OrderProduct orderProduct : orderProducts) {
+            totalPrice += orderProduct.getAmount() * orderProduct.getProduct().getPrice();
+        }
+    }
 }

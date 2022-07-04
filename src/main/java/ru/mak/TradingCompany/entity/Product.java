@@ -3,7 +3,7 @@ package ru.mak.TradingCompany.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "product")
@@ -23,6 +23,6 @@ public class Product extends Base {
     @JoinColumn(name="type_id")
     private Type type;
 
-    @OneToMany(mappedBy = "product")
-    private List<OrderProduct> orderProducts;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+    private Set<OrderProduct> orderProducts;
 }

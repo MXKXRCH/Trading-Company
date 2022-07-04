@@ -14,8 +14,8 @@ import javax.persistence.*;
 public class OrderProduct extends Base {
     @ManyToOne
     @JoinColumn(name="order_id")
-
     private Order order;
+
     @ManyToOne
     @JoinColumn(name="product_id")
     private Product product;
