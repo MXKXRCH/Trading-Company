@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.mak.tradingCompany.dto.ProductDto;
 import ru.mak.tradingCompany.entity.Product;
+import ru.mak.tradingCompany.entity.Type;
 import ru.mak.tradingCompany.repo.ProductRepo;
 import ru.mak.tradingCompany.repo.TypeRepo;
 
@@ -26,13 +27,13 @@ public class ProductService {
         }
     }
 
-    public Product save(Product product, Long typeId) {
+    public ProductDto save(ProductDto productDto, Long typeId) {
         try {
-            product.setType(typeRepo.getReferenceById(typeId));
+            Type type = typeRepo.getReferenceById(typeId);
+            return productRepo.save(new Product(productDto, type)).toProductDto();
         } catch (EntityNotFoundException e) {
             return null;
         }
-        return productRepo.save(product);
     }
 
     public void delete(Long id) {

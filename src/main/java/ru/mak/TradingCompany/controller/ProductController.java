@@ -7,7 +7,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.mak.tradingCompany.dto.ProductDto;
-import ru.mak.tradingCompany.entity.Product;
 import ru.mak.tradingCompany.service.ProductService;
 
 import java.util.List;
@@ -31,7 +30,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductDto> saveProduct(@RequestBody Product product,
+    public ResponseEntity<ProductDto> saveProduct(@RequestBody ProductDto product,
                                                   @RequestParam Long typeId) {
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -40,11 +39,11 @@ public class ProductController {
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(product.toProductDto(), new HttpHeaders(), HttpStatus.CREATED);
+        return new ResponseEntity<>(product, new HttpHeaders(), HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<ProductDto> updateProduct(@RequestBody Product product,
+    public ResponseEntity<ProductDto> updateProduct(@RequestBody ProductDto product,
                                                     @RequestParam Long typeId) {
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -53,7 +52,7 @@ public class ProductController {
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(product.toProductDto(), new HttpHeaders(), HttpStatus.OK);
+        return new ResponseEntity<>(product, new HttpHeaders(), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

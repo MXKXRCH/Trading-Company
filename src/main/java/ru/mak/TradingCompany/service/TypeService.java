@@ -23,8 +23,8 @@ public class TypeService {
         }
     }
 
-    public void save(Type type) {
-        typeRepo.save(type);
+    public void save(TypeDto type) {
+        typeRepo.save(new Type(type));
     }
 
     public void delete(Long id) {

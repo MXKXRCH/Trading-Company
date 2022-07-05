@@ -7,7 +7,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.mak.tradingCompany.dto.EmployeeDto;
-import ru.mak.tradingCompany.entity.Employee;
 import ru.mak.tradingCompany.service.EmployeeService;
 
 import java.util.List;
@@ -31,21 +30,21 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<EmployeeDto> saveEmployee(@RequestBody Employee employee) {
+    public ResponseEntity<EmployeeDto> saveEmployee(@RequestBody EmployeeDto employee) {
         if (employee == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         employeeService.save(employee);
-        return new ResponseEntity<>(employee.toEmployeeDto(), new HttpHeaders(), HttpStatus.CREATED);
+        return new ResponseEntity<>(employee, new HttpHeaders(), HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<EmployeeDto> updateEmployee(@RequestBody Employee employee) {
+    public ResponseEntity<EmployeeDto> updateEmployee(@RequestBody EmployeeDto employee) {
         if (employee == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         employeeService.save(employee);
-        return new ResponseEntity<>(employee.toEmployeeDto(), new HttpHeaders(), HttpStatus.OK);
+        return new ResponseEntity<>(employee, new HttpHeaders(), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

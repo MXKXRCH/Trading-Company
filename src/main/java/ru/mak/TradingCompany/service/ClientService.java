@@ -24,8 +24,8 @@ public class ClientService {
         }
     }
 
-    public void save(Client client) {
-        clientRepo.save(client);
+    public void save(ClientDto client) {
+        clientRepo.save(new Client(client));
     }
 
     public void delete(Long id) {

@@ -7,7 +7,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.mak.tradingCompany.dto.OrderDto;
-import ru.mak.tradingCompany.entity.Order;
 import ru.mak.tradingCompany.service.OrderService;
 
 import java.util.List;
@@ -29,7 +28,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<OrderDto> saveOrder(@RequestBody Order order,
+    public ResponseEntity<OrderDto> saveOrder(@RequestBody OrderDto order,
                                               @RequestParam Long clientId,
                                               @RequestParam Long employeeId) {
         if (order == null) {
@@ -39,11 +38,11 @@ public class OrderController {
         if (order == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(order.toOrderDto(), new HttpHeaders(), HttpStatus.CREATED);
+        return new ResponseEntity<>(order, new HttpHeaders(), HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<OrderDto> updateOrder(@RequestBody Order order,
+    public ResponseEntity<OrderDto> updateOrder(@RequestBody OrderDto order,
                                                 @RequestParam Long clientId,
                                                 @RequestParam Long employeeId) {
         if (order == null) {
@@ -53,7 +52,7 @@ public class OrderController {
         if (order == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(order.toOrderDto(), new HttpHeaders(), HttpStatus.OK);
+        return new ResponseEntity<>(order, new HttpHeaders(), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

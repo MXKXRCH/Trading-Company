@@ -23,8 +23,8 @@ public class EmployeeService {
         }
     }
 
-    public void save(Employee employee) {
-        employeeRepo.save(employee);
+    public void save(EmployeeDto employee) {
+        employeeRepo.save(new Employee(employee));
     }
 
     public void delete(Long id) {

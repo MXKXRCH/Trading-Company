@@ -7,7 +7,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.mak.tradingCompany.dto.ClientDto;
-import ru.mak.tradingCompany.entity.Client;
 import ru.mak.tradingCompany.service.ClientService;
 
 import java.util.List;
@@ -31,21 +30,21 @@ public class ClientController {
     }
 
     @PostMapping
-    public ResponseEntity<ClientDto> saveClient(@RequestBody Client client) {
+    public ResponseEntity<ClientDto> saveClient(@RequestBody ClientDto client) {
         if (client == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         clientService.save(client);
-        return new ResponseEntity<>(client.toClientDto(), new HttpHeaders(), HttpStatus.CREATED);
+        return new ResponseEntity<>(client, new HttpHeaders(), HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<ClientDto> updateClient(@RequestBody Client client) {
+    public ResponseEntity<ClientDto> updateClient(@RequestBody ClientDto client) {
         if (client == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         clientService.save(client);
-        return new ResponseEntity<>(client.toClientDto(), new HttpHeaders(), HttpStatus.OK);
+        return new ResponseEntity<>(client, new HttpHeaders(), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

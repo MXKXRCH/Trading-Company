@@ -7,7 +7,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.mak.tradingCompany.dto.OrderProductDto;
-import ru.mak.tradingCompany.entity.OrderProduct;
 import ru.mak.tradingCompany.service.OrderProductService;
 
 import java.util.List;
@@ -31,7 +30,7 @@ public class OrderProductController {
     }
 
     @PostMapping
-    public ResponseEntity<OrderProductDto> saveOrderProduct(@RequestBody OrderProduct orderProduct,
+    public ResponseEntity<OrderProductDto> saveOrderProduct(@RequestBody OrderProductDto orderProduct,
                                                             @RequestParam Long orderId,
                                                             @RequestParam Long productId) {
         if (orderProduct == null) {
@@ -41,13 +40,13 @@ public class OrderProductController {
         if (orderProduct == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(orderProduct.toOrderProductDto(), new HttpHeaders(), HttpStatus.CREATED);
+        return new ResponseEntity<>(orderProduct, new HttpHeaders(), HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<OrderProductDto> updateOrderProduct(@RequestBody OrderProduct orderProduct,
-                                                             @RequestParam Long orderId,
-                                                             @RequestParam Long productId) {
+    public ResponseEntity<OrderProductDto> updateOrderProduct(@RequestBody OrderProductDto orderProduct,
+                                                              @RequestParam Long orderId,
+                                                              @RequestParam Long productId) {
         if (orderProduct == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -55,7 +54,7 @@ public class OrderProductController {
         if (orderProduct == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(orderProduct.toOrderProductDto(), new HttpHeaders(), HttpStatus.OK);
+        return new ResponseEntity<>(orderProduct, new HttpHeaders(), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

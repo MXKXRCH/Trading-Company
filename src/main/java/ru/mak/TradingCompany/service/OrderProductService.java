@@ -3,7 +3,9 @@ package ru.mak.tradingCompany.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.mak.tradingCompany.dto.OrderProductDto;
+import ru.mak.tradingCompany.entity.Order;
 import ru.mak.tradingCompany.entity.OrderProduct;
+import ru.mak.tradingCompany.entity.Product;
 import ru.mak.tradingCompany.repo.OrderProductRepo;
 import ru.mak.tradingCompany.repo.OrderRepo;
 import ru.mak.tradingCompany.repo.ProductRepo;
@@ -29,14 +31,14 @@ public class OrderProductService {
         }
     }
 
-    public OrderProduct save(OrderProduct orderProduct, Long orderId, Long productId) {
+    public OrderProductDto save(OrderProductDto orderProduct, Long orderId, Long productId) {
         try {
-            orderProduct.setOrder(orderRepo.getReferenceById(orderId));
-            orderProduct.setProduct(productRepo.getReferenceById(productId));
+            Order order = orderRepo.getReferenceById(orderId);
+            Product product = productRepo.getReferenceById(productId);
+            return orderProductRepo.save(new OrderProduct(orderProduct, order, product)).toOrderProductDto();
         } catch (EntityNotFoundException e) {
             return null;
         }
-        return orderProductRepo.save(orderProduct);
     }
 
     public void delete(Long id) {

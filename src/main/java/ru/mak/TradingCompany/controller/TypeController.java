@@ -6,7 +6,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.mak.tradingCompany.dto.TypeDto;
-import ru.mak.tradingCompany.entity.Type;
 import ru.mak.tradingCompany.service.TypeService;
 
 import java.util.List;
@@ -30,21 +29,21 @@ public class TypeController {
     }
 
     @PostMapping
-    public ResponseEntity<TypeDto> saveType(@RequestBody Type type) {
+    public ResponseEntity<TypeDto> saveType(@RequestBody TypeDto type) {
         if (type == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         typeService.save(type);
-        return new ResponseEntity<>(type.toTypeDto(), HttpStatus.CREATED);
+        return new ResponseEntity<>(type, HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<TypeDto> updateType(@RequestBody Type type) {
+    public ResponseEntity<TypeDto> updateType(@RequestBody TypeDto type) {
         if (type == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         typeService.save(type);
-        return new ResponseEntity<>(type.toTypeDto(), HttpStatus.OK);
+        return new ResponseEntity<>(type, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
