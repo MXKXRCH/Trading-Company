@@ -1,13 +1,16 @@
 package ru.mak.tradingCompany.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Set;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(name = "product_tb")
 public class Product extends Base {
@@ -21,6 +24,7 @@ public class Product extends Base {
     @JoinColumn(name="type_id")
     private Type type;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<OrderProduct> orderProducts;
 }
