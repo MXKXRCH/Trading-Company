@@ -1,4 +1,4 @@
-package ru.mak.TradingCompany;
+package ru.mak.tradingCompany;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,5 +9,4 @@ public class TradingCompanyApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TradingCompanyApplication.class, args);
 	}
-
 }
