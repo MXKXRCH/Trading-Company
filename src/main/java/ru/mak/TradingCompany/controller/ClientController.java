@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.mak.tradingCompany.dto.ClientDto;
 import ru.mak.tradingCompany.entity.Client;
 import ru.mak.tradingCompany.service.ClientService;
 
@@ -18,47 +19,54 @@ public class ClientController {
     ClientService clientService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Client> getClient(@PathVariable("id") Long id) {
-        if (id == null)
+    public ResponseEntity<ClientDto> getClient(@PathVariable("id") Long id) {
+        if (id == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        Client client = clientService.getById(id);
-        if (client == null)
+        }
+        ClientDto client = clientService.getById(id);
+        if (client == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(client, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Client> saveClient(@RequestBody Client client) {
-        if (client == null)
+    public ResponseEntity<ClientDto> saveClient(@RequestBody Client client) {
+        if (client == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-
+        }
         clientService.save(client);
-        return new ResponseEntity<>(client, new HttpHeaders(), HttpStatus.CREATED);
+        return new ResponseEntity<>(client.toClientDto(), new HttpHeaders(), HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<Client> updateClient(@RequestBody Client client) {
-        if (client == null)
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);clientService.save(client);
-        return new ResponseEntity<>(client, new HttpHeaders(), HttpStatus.OK);
+    public ResponseEntity<ClientDto> updateClient(@RequestBody Client client) {
+        if (client == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        clientService.save(client);
+        return new ResponseEntity<>(client.toClientDto(), new HttpHeaders(), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Client> deleteClient(@PathVariable("id") Long id) {
-        if (id == null)
+    public ResponseEntity<ClientDto> deleteClient(@PathVariable("id") Long id) {
+        if (id == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        Client client = clientService.getById(id);
-        if (client == null)
+        }
+        ClientDto client = clientService.getById(id);
+        if (client == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         clientService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Client>> getAllClients() {
-        List<Client> clients = clientService.getAll();
-        if (clients.isEmpty())
+    public ResponseEntity<List<ClientDto>> getAllClients() {
+        List<ClientDto> clients = clientService.getAll();
+        if (clients.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(clients, HttpStatus.OK);
     }
 }

@@ -2,15 +2,14 @@ package ru.mak.tradingCompany.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
+import ru.mak.tradingCompany.dto.OrderProductDto;
 
 import javax.persistence.*;
 
 @Getter
 @Setter
-@ToString
 @Entity
-@Table(name = "order_product_tb")
+@Table(name = "order_product")
 public class OrderProduct extends Base {
     @ManyToOne
     @JoinColumn(name="order_id")
@@ -22,4 +21,8 @@ public class OrderProduct extends Base {
 
     @Column(name = "amount")
     private Integer amount;
+
+    public OrderProductDto toOrderProductDto() {
+        return new OrderProductDto(this);
+    }
 }

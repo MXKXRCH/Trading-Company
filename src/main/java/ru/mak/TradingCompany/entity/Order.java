@@ -1,9 +1,8 @@
 package ru.mak.tradingCompany.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
+import ru.mak.tradingCompany.dto.OrderDto;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -11,9 +10,8 @@ import java.util.Set;
 
 @Getter
 @Setter
-@ToString
 @Entity
-@Table(name = "order_tb")
+@Table(name = "ordering")
 public class Order extends Base {
     @Column(name = "created_date")
     private Date createdDate;
@@ -30,14 +28,10 @@ public class Order extends Base {
     private Employee employee;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "order", fetch = FetchType.LAZY)
-    @JsonIgnore
     private Set<OrderProduct> orderProducts;
 
-    public float updateTotalPrice() {
-        float totalPrice = 0f;
-        for (OrderProduct orderProduct : orderProducts) {
-            totalPrice += orderProduct.getAmount() * orderProduct.getProduct().getPrice();
-        }
-        return totalPrice;
+    public OrderDto toOrderDto() {
+        return new OrderDto(this);
+
     }
 }

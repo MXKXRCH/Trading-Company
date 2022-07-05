@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.mak.tradingCompany.dto.OrderDto;
 import ru.mak.tradingCompany.entity.Order;
 import ru.mak.tradingCompany.service.OrderService;
 
@@ -18,51 +19,62 @@ public class OrderController {
     OrderService orderService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Order> getOrder(@PathVariable("id") Long id) {
+    public ResponseEntity<OrderDto> getOrder(@PathVariable("id") Long id) {
         if (id == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        Order order = orderService.getById(id);
+        OrderDto order = orderService.getById(id);
         if (order == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Order> saveOrder(@RequestBody Order order,
-                                           @RequestParam Long clientId,
-                                           @RequestParam Long employeeId) {
-        if (order == null)
+    public ResponseEntity<OrderDto> saveOrder(@RequestBody Order order,
+                                              @RequestParam Long clientId,
+                                              @RequestParam Long employeeId) {
+        if (order == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        orderService.save(order, clientId, employeeId);
-        return new ResponseEntity<>(order, new HttpHeaders(), HttpStatus.CREATED);
+        }
+        order = orderService.save(order, clientId, employeeId);
+        if (order == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(order.toOrderDto(), new HttpHeaders(), HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<Order> updateOrder(@RequestBody Order order,
-                                             @RequestParam Long clientId,
-                                             @RequestParam Long employeeId) {
-        if (order == null)
+    public ResponseEntity<OrderDto> updateOrder(@RequestBody Order order,
+                                                @RequestParam Long clientId,
+                                                @RequestParam Long employeeId) {
+        if (order == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        orderService.save(order, clientId, employeeId);
-        return new ResponseEntity<>(order, new HttpHeaders(), HttpStatus.OK);
+        }
+        order = orderService.save(order, clientId, employeeId);
+        if (order == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(order.toOrderDto(), new HttpHeaders(), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Order> deleteOrder(@PathVariable("id") Long id) {
-        if (id == null)
+    public ResponseEntity<OrderDto> deleteOrder(@PathVariable("id") Long id) {
+        if (id == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        Order order = orderService.getById(id);
-        if (order == null)
+        }
+        OrderDto order = orderService.getById(id);
+        if (order == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         orderService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Order>> getAllOrders() {
-        List<Order> orders = orderService.getAll();
-        if (orders.isEmpty())
+    public ResponseEntity<List<OrderDto>> getAllOrders() {
+        List<OrderDto> orders = orderService.getAll();
+        if (orders.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 }

@@ -2,20 +2,22 @@ package ru.mak.tradingCompany.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.mak.tradingCompany.dto.EmployeeDto;
 import ru.mak.tradingCompany.entity.Employee;
 import ru.mak.tradingCompany.repo.EmployeeRepo;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
     @Autowired
     EmployeeRepo employeeRepo;
 
-    public Employee getById(Long id) {
+    public EmployeeDto getById(Long id) {
         try {
-            return employeeRepo.getReferenceById(id);
+            return employeeRepo.getReferenceById(id).toEmployeeDto();
         } catch (EntityNotFoundException e) {
             return null;
         }
@@ -29,7 +31,7 @@ public class EmployeeService {
         employeeRepo.deleteById(id);
     }
 
-    public List<Employee> getAll() {
-        return employeeRepo.findAll();
+    public List<EmployeeDto> getAll() {
+        return employeeRepo.findAll().stream().map(Employee::toEmployeeDto).collect(Collectors.toList());
     }
 }

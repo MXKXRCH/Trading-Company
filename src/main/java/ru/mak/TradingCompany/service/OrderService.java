@@ -2,6 +2,7 @@ package ru.mak.tradingCompany.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.mak.tradingCompany.dto.OrderDto;
 import ru.mak.tradingCompany.entity.Order;
 import ru.mak.tradingCompany.repo.ClientRepo;
 import ru.mak.tradingCompany.repo.EmployeeRepo;
@@ -9,6 +10,7 @@ import ru.mak.tradingCompany.repo.OrderRepo;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -19,9 +21,9 @@ public class OrderService {
     @Autowired
     EmployeeRepo employeeRepo;
 
-    public Order getById(Long id) {
+    public OrderDto getById(Long id) {
         try {
-            return orderRepo.getReferenceById(id);
+            return orderRepo.getReferenceById(id).toOrderDto();
         } catch (EntityNotFoundException e) {
             return null;
         }
@@ -41,7 +43,7 @@ public class OrderService {
         orderRepo.deleteById(id);
     }
 
-    public List<Order> getAll() {
-        return orderRepo.findAll();
+    public List<OrderDto> getAll() {
+        return orderRepo.findAll().stream().map(Order::toOrderDto).collect(Collectors.toList());
     }
 }

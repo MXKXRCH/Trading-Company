@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.mak.tradingCompany.dto.OrderProductDto;
 import ru.mak.tradingCompany.entity.OrderProduct;
 import ru.mak.tradingCompany.service.OrderProductService;
 
@@ -18,58 +19,64 @@ public class OrderProductController {
     OrderProductService orderProductService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<OrderProduct> getOrderProduct(@PathVariable("id") Long id) {
-        if (id == null)
+    public ResponseEntity<OrderProductDto> getOrderProduct(@PathVariable("id") Long id) {
+        if (id == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-
-        OrderProduct orderProduct = orderProductService.getById(id);
-
-        if (orderProduct == null)
+        }
+        OrderProductDto orderProduct = orderProductService.getById(id);
+        if (orderProduct == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
+        }
         return new ResponseEntity<>(orderProduct, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<OrderProduct> saveOrderProduct(@RequestBody OrderProduct orderProduct,
-                                                         @RequestParam Long orderId,
-                                                         @RequestParam Long productId) {
-        if (orderProduct == null)
+    public ResponseEntity<OrderProductDto> saveOrderProduct(@RequestBody OrderProduct orderProduct,
+                                                            @RequestParam Long orderId,
+                                                            @RequestParam Long productId) {
+        if (orderProduct == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         orderProduct = orderProductService.save(orderProduct, orderId, productId);
-        if (orderProduct == null)
+        if (orderProduct == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        return new ResponseEntity<>(orderProduct, new HttpHeaders(), HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(orderProduct.toOrderProductDto(), new HttpHeaders(), HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<OrderProduct> updateOrderProduct(@RequestBody OrderProduct orderProduct,
-                                                           @RequestParam Long orderId,
-                                                           @RequestParam Long productId) {
-        if (orderProduct == null)
+    public ResponseEntity<OrderProductDto> updateOrderProduct(@RequestBody OrderProduct orderProduct,
+                                                             @RequestParam Long orderId,
+                                                             @RequestParam Long productId) {
+        if (orderProduct == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         orderProduct = orderProductService.save(orderProduct, orderId, productId);
-        if (orderProduct == null)
+        if (orderProduct == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        return new ResponseEntity<>(orderProduct, new HttpHeaders(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(orderProduct.toOrderProductDto(), new HttpHeaders(), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<OrderProduct> deleteOrderProduct(@PathVariable("id") Long id) {
-        if (id == null)
+    public ResponseEntity<OrderProductDto> deleteOrderProduct(@PathVariable("id") Long id) {
+        if (id == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        OrderProduct orderProduct = orderProductService.getById(id);
-        if (orderProduct == null)
+        }
+        OrderProductDto orderProduct = orderProductService.getById(id);
+        if (orderProduct == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         orderProductService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<OrderProduct>> getAllOrderProducts() {
-        List<OrderProduct> orderProducts = orderProductService.getAll();
-        if (orderProducts.isEmpty())
+    public ResponseEntity<List<OrderProductDto>> getAllOrderProducts() {
+        List<OrderProductDto> orderProducts = orderProductService.getAll();
+        if (orderProducts.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(orderProducts, HttpStatus.OK);
     }
 }

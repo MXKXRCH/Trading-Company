@@ -2,12 +2,14 @@ package ru.mak.tradingCompany.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.mak.tradingCompany.dto.ProductDto;
 import ru.mak.tradingCompany.entity.Product;
 import ru.mak.tradingCompany.repo.ProductRepo;
 import ru.mak.tradingCompany.repo.TypeRepo;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -16,9 +18,9 @@ public class ProductService {
     @Autowired
     TypeRepo typeRepo;
 
-    public Product getById(Long id) {
+    public ProductDto getById(Long id) {
         try {
-            return productRepo.getReferenceById(id);
+            return productRepo.getReferenceById(id).toProductDto();
         } catch (EntityNotFoundException e) {
             return null;
         }
@@ -37,7 +39,7 @@ public class ProductService {
         productRepo.deleteById(id);
     }
 
-    public List<Product> getAll() {
-        return productRepo.findAll();
+    public List<ProductDto> getAll() {
+        return productRepo.findAll().stream().map(Product::toProductDto).collect(Collectors.toList());
     }
 }

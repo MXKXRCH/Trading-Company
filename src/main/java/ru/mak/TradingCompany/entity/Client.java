@@ -1,18 +1,16 @@
 package ru.mak.tradingCompany.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
+import ru.mak.tradingCompany.dto.ClientDto;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Getter
 @Setter
-@ToString
 @Entity
-@Table(name = "client_tb")
+@Table(name = "client")
 public class Client extends Base {
     @Column(name = "phone")
     private String phone;
@@ -24,6 +22,9 @@ public class Client extends Base {
     private String address;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "client", fetch = FetchType.LAZY)
-    @JsonIgnore
     private Set<Order> orders;
+
+    public ClientDto toClientDto() {
+        return new ClientDto(this);
+    }
 }
