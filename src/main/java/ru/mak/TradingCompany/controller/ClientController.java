@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.mak.tradingCompany.dto.ClientDto;
 import ru.mak.tradingCompany.service.ClientService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -30,7 +31,7 @@ public class ClientController {
     }
 
     @PostMapping
-    public ResponseEntity<ClientDto> saveClient(@RequestBody ClientDto client) {
+    public ResponseEntity<ClientDto> saveClient(@RequestBody @Valid ClientDto client) {
         if (client == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -39,7 +40,7 @@ public class ClientController {
     }
 
     @PutMapping
-    public ResponseEntity<ClientDto> updateClient(@RequestBody ClientDto client) {
+    public ResponseEntity<ClientDto> updateClient(@RequestBody @Valid ClientDto client) {
         if (client == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.mak.tradingCompany.dto.OrderDto;
 import ru.mak.tradingCompany.service.OrderService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -28,7 +29,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<OrderDto> saveOrder(@RequestBody OrderDto order,
+    public ResponseEntity<OrderDto> saveOrder(@RequestBody @Valid OrderDto order,
                                               @RequestParam Long clientId,
                                               @RequestParam Long employeeId) {
         if (order == null) {
@@ -42,7 +43,7 @@ public class OrderController {
     }
 
     @PutMapping
-    public ResponseEntity<OrderDto> updateOrder(@RequestBody OrderDto order,
+    public ResponseEntity<OrderDto> updateOrder(@RequestBody @Valid OrderDto order,
                                                 @RequestParam Long clientId,
                                                 @RequestParam Long employeeId) {
         if (order == null) {

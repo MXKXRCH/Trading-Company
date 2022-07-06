@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.mak.tradingCompany.dto.ProductDto;
 import ru.mak.tradingCompany.service.ProductService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -30,7 +31,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductDto> saveProduct(@RequestBody ProductDto product,
+    public ResponseEntity<ProductDto> saveProduct(@RequestBody @Valid ProductDto product,
                                                   @RequestParam Long typeId) {
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -43,7 +44,7 @@ public class ProductController {
     }
 
     @PutMapping
-    public ResponseEntity<ProductDto> updateProduct(@RequestBody ProductDto product,
+    public ResponseEntity<ProductDto> updateProduct(@RequestBody @Valid ProductDto product,
                                                     @RequestParam Long typeId) {
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

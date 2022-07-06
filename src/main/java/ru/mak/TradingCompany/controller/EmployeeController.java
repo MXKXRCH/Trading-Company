@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.mak.tradingCompany.dto.EmployeeDto;
 import ru.mak.tradingCompany.service.EmployeeService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -30,7 +31,7 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<EmployeeDto> saveEmployee(@RequestBody EmployeeDto employee) {
+    public ResponseEntity<EmployeeDto> saveEmployee(@RequestBody @Valid EmployeeDto employee) {
         if (employee == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -39,7 +40,7 @@ public class EmployeeController {
     }
 
     @PutMapping
-    public ResponseEntity<EmployeeDto> updateEmployee(@RequestBody EmployeeDto employee) {
+    public ResponseEntity<EmployeeDto> updateEmployee(@RequestBody @Valid EmployeeDto employee) {
         if (employee == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.mak.tradingCompany.dto.TypeDto;
 import ru.mak.tradingCompany.service.TypeService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -29,7 +30,7 @@ public class TypeController {
     }
 
     @PostMapping
-    public ResponseEntity<TypeDto> saveType(@RequestBody TypeDto type) {
+    public ResponseEntity<TypeDto> saveType(@RequestBody @Valid TypeDto type) {
         if (type == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -38,7 +39,7 @@ public class TypeController {
     }
 
     @PutMapping
-    public ResponseEntity<TypeDto> updateType(@RequestBody TypeDto type) {
+    public ResponseEntity<TypeDto> updateType(@RequestBody @Valid TypeDto type) {
         if (type == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

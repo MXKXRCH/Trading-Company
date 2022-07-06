@@ -5,12 +5,16 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import ru.mak.tradingCompany.entity.OrderProduct;
 
+import javax.validation.constraints.Min;
+
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 public class OrderProductDto extends BaseDto {
     private OrderDto orderDto;
     private ProductDto productDto;
+
+    @Min(value = 1, message = "Amount must be greater or equals than 1")
     private Integer amount;
 
     public OrderProductDto(OrderProduct orderProduct) {

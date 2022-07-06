@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.mak.tradingCompany.dto.OrderProductDto;
 import ru.mak.tradingCompany.service.OrderProductService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -30,7 +31,7 @@ public class OrderProductController {
     }
 
     @PostMapping
-    public ResponseEntity<OrderProductDto> saveOrderProduct(@RequestBody OrderProductDto orderProduct,
+    public ResponseEntity<OrderProductDto> saveOrderProduct(@RequestBody @Valid OrderProductDto orderProduct,
                                                             @RequestParam Long orderId,
                                                             @RequestParam Long productId) {
         if (orderProduct == null) {
@@ -44,7 +45,7 @@ public class OrderProductController {
     }
 
     @PutMapping
-    public ResponseEntity<OrderProductDto> updateOrderProduct(@RequestBody OrderProductDto orderProduct,
+    public ResponseEntity<OrderProductDto> updateOrderProduct(@RequestBody @Valid OrderProductDto orderProduct,
                                                               @RequestParam Long orderId,
                                                               @RequestParam Long productId) {
         if (orderProduct == null) {
