@@ -1,0 +1,11 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: start
+      author: mak
+
+  - include:
+      file: /db/changelog/changeset/schema/001_create_tables.sql
+
+  - include:
+      file: /db/changelog/changeset/data/001_insert_data.sql
