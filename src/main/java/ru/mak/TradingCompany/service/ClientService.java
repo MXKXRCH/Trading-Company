@@ -6,7 +6,6 @@ import ru.mak.tradingCompany.dto.ClientDto;
 import ru.mak.tradingCompany.entity.Client;
 import ru.mak.tradingCompany.repo.ClientRepo;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,11 +15,8 @@ public class ClientService {
     ClientRepo clientRepo;
 
     public ClientDto getById(Long id) {
-        try {
-            return clientRepo.getReferenceById(id).toClientDto();
-        } catch (EntityNotFoundException e) {
-            return null;
-        }
+        Client client = clientRepo.findById(id).orElse(null);
+        return (client == null) ? null : client.toClientDto();
     }
 
     public void save(ClientDto client) {

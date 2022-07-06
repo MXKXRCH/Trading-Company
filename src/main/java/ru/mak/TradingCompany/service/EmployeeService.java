@@ -6,7 +6,6 @@ import ru.mak.tradingCompany.dto.EmployeeDto;
 import ru.mak.tradingCompany.entity.Employee;
 import ru.mak.tradingCompany.repo.EmployeeRepo;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,11 +15,8 @@ public class EmployeeService {
     EmployeeRepo employeeRepo;
 
     public EmployeeDto getById(Long id) {
-        try {
-            return employeeRepo.getReferenceById(id).toEmployeeDto();
-        } catch (EntityNotFoundException e) {
-            return null;
-        }
+        Employee employee = employeeRepo.findById(id).orElse(null);
+        return (employee == null) ? null : employee.toEmployeeDto();
     }
 
     public void save(EmployeeDto employee) {

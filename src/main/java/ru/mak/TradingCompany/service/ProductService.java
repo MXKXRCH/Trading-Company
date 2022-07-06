@@ -8,7 +8,6 @@ import ru.mak.tradingCompany.entity.Type;
 import ru.mak.tradingCompany.repo.ProductRepo;
 import ru.mak.tradingCompany.repo.TypeRepo;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,20 +19,13 @@ public class ProductService {
     TypeRepo typeRepo;
 
     public ProductDto getById(Long id) {
-        try {
-            return productRepo.getReferenceById(id).toProductDto();
-        } catch (EntityNotFoundException e) {
-            return null;
-        }
+        Product product = productRepo.findById(id).orElse(null);
+        return (product == null) ? null : product.toProductDto();
     }
 
     public ProductDto save(ProductDto productDto, Long typeId) {
-        try {
-            Type type = typeRepo.getReferenceById(typeId);
-            return productRepo.save(new Product(productDto, type)).toProductDto();
-        } catch (EntityNotFoundException e) {
-            return null;
-        }
+        Type type = typeRepo.findById(typeId).orElse(null);
+        return (type == null) ? null : productRepo.save(new Product(productDto, type)).toProductDto();
     }
 
     public void delete(Long id) {

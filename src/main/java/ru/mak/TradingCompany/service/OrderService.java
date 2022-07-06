@@ -10,7 +10,6 @@ import ru.mak.tradingCompany.repo.ClientRepo;
 import ru.mak.tradingCompany.repo.EmployeeRepo;
 import ru.mak.tradingCompany.repo.OrderRepo;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,21 +23,15 @@ public class OrderService {
     EmployeeRepo employeeRepo;
 
     public OrderDto getById(Long id) {
-        try {
-            return orderRepo.getReferenceById(id).toOrderDto();
-        } catch (EntityNotFoundException e) {
-            return null;
-        }
+        Order order = orderRepo.findById(id).orElse(null);
+        return (order == null) ? null : order.toOrderDto();
     }
 
     public OrderDto save(OrderDto order, Long clientId, Long employeeId) {
-        try {
-            Client client = clientRepo.getReferenceById(clientId);
-            Employee employee = employeeRepo.getReferenceById(employeeId);
-            return orderRepo.save(new Order(order, employee, client)).toOrderDto();
-        } catch (EntityNotFoundException e) {
-            return null;
-        }
+        Client client = clientRepo.findById(clientId).orElse(null);
+        Employee employee = employeeRepo.findById(employeeId).orElse(null);
+        return (client == null || employee == null) ? null
+        : orderRepo.save(new Order(order, employee, client)).toOrderDto();
     }
 
     public void delete(Long id) {

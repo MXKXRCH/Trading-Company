@@ -6,7 +6,6 @@ import ru.mak.tradingCompany.dto.TypeDto;
 import ru.mak.tradingCompany.entity.Type;
 import ru.mak.tradingCompany.repo.TypeRepo;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,11 +15,8 @@ public class TypeService {
     TypeRepo typeRepo;
 
     public TypeDto getById(Long id) {
-        try {
-            return typeRepo.getReferenceById(id).toTypeDto();
-        } catch (EntityNotFoundException e) {
-            return null;
-        }
+        Type type = typeRepo.findById(id).orElse(null);
+        return (type == null) ? null : type.toTypeDto();
     }
 
     public void save(TypeDto type) {
