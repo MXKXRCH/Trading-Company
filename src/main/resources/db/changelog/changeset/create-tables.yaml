@@ -1,11 +1,183 @@
 databaseChangeLog:
-
   - changeSet:
       id: start
       author: mak
+      changes:
+        - createTable:
+            tableName: client
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phone
+                  type: varchar(20)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: address
+                  type: varchar(255)
 
-  - include:
-      file: /db/changelog/changeset/schema/001_create_tables.sql
+              - createTable:
+                  tableName: employee
+                  columns:
+                    - column:
+                        name: id
+                        type: BIGINT
+                        autoIncrement: true
+                        constraints:
+                          primaryKey: true
+                          nullable: false
+                    - column:
+                        name: name
+                        type: varchar(64)
+                        constraints:
+                          nullable: false
+                    - column:
+                        name: phone
+                        type: varchar(20)
+                        constraints:
+                          unique: true
+                          nullable: false
+                    - column:
+                        name: job_title
+                        type: varchar(255)
 
-  - include:
-      file: /db/changelog/changeset/data/001_insert_data.sql
+        - createTable:
+            tableName: employee
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phone
+                  type: varchar(20)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: job_title
+                  type: varchar(255)
+
+        - createTable:
+            tableName: product_type
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+
+        - createTable:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: price
+                  type: decimal
+                  constraints:
+                    nullable: false
+              - column:
+                  name: type_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_type
+                    references: product_type(id)
+
+        - createTable:
+            tableName: ordering
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: created_date
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: completed_date
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: client_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_client
+                    references: client(id)
+              - column:
+                  name: employee_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_employee
+                    references: employee(id)
+
+        - createTable:
+            tableName: order_product
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: amount
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: order_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_order
+                    references: ordering(id)
+              - column:
+                  name: product_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_product
+                    references: product(id)
