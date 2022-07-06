@@ -42,7 +42,7 @@ public class OrderProductService {
     }
 
     public void delete(Long id) {
-        orderProductRepo.deleteById(id);
+       orderProductRepo.delete(id);
     }
 
     public List<OrderProductDto> getAll() {
