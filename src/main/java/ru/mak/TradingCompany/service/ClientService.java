@@ -19,7 +19,6 @@ public class ClientService {
         try {
             return clientRepo.getReferenceById(id).toClientDto();
         } catch (EntityNotFoundException e) {
-            System.out.println("Go fuck yourself");
             return null;
         }
     }
