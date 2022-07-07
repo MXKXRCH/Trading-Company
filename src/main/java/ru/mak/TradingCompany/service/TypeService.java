@@ -1,6 +1,7 @@
 package ru.mak.tradingCompany.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.mak.tradingCompany.dto.TypeDto;
 import ru.mak.tradingCompany.entity.Type;
@@ -27,7 +28,7 @@ public class TypeService {
         typeRepo.deleteById(id);
     }
 
-    public List<TypeDto> getAll() {
-        return typeRepo.findAll().stream().map(Type::toTypeDto).collect(Collectors.toList());
+    public List<TypeDto> getAll(Pageable pageable) {
+        return typeRepo.findAll(pageable).stream().map(Type::toTypeDto).collect(Collectors.toList());
     }
 }

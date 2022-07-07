@@ -1,6 +1,7 @@
 package ru.mak.tradingCompany.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.mak.tradingCompany.dto.ProductDto;
 import ru.mak.tradingCompany.entity.Product;
@@ -32,7 +33,7 @@ public class ProductService {
         productRepo.deleteById(id);
     }
 
-    public List<ProductDto> getAll() {
-        return productRepo.findAll().stream().map(Product::toProductDto).collect(Collectors.toList());
+    public List<ProductDto> getAll(Pageable pageable) {
+        return productRepo.findAll(pageable).stream().map(Product::toProductDto).collect(Collectors.toList());
     }
 }

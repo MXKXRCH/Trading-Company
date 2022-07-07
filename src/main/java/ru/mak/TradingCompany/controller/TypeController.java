@@ -1,6 +1,9 @@
 package ru.mak.tradingCompany.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -61,8 +64,10 @@ public class TypeController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<TypeDto>> getAllTypes() {
-        List<TypeDto> types = typeService.getAll();
+    public ResponseEntity<List<TypeDto>> getAllTypes(
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC) Pageable pageable
+    ) {
+        List<TypeDto> types = typeService.getAll(pageable);
         if (types.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

@@ -1,6 +1,9 @@
 package ru.mak.tradingCompany.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -62,8 +65,10 @@ public class EmployeeController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<EmployeeDto>> getAllEmployees() {
-        List<EmployeeDto> employees = employeeService.getAll();
+    public ResponseEntity<List<EmployeeDto>> getAllEmployees(
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC) Pageable pageable
+    ) {
+        List<EmployeeDto> employees = employeeService.getAll(pageable);
         if (employees.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
