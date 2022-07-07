@@ -27,31 +27,8 @@ databaseChangeLog:
               - column:
                   name: address
                   type: varchar(255)
-
-              - createTable:
-                  tableName: employee
-                  columns:
-                    - column:
-                        name: id
-                        type: BIGINT
-                        autoIncrement: true
-                        constraints:
-                          primaryKey: true
-                          nullable: false
-                    - column:
-                        name: name
-                        type: varchar(64)
-                        constraints:
-                          nullable: false
-                    - column:
-                        name: phone
-                        type: varchar(20)
-                        constraints:
-                          unique: true
-                          nullable: false
-                    - column:
-                        name: job_title
-                        type: varchar(255)
+                  constraints:
+                    nullable: false
 
         - createTable:
             tableName: employee
@@ -61,22 +38,24 @@ databaseChangeLog:
                   type: BIGINT
                   autoIncrement: true
                   constraints:
-                    primaryKey: true
-                    nullable: false
+                      primaryKey: true
+                      nullable: false
               - column:
                   name: name
                   type: varchar(64)
                   constraints:
-                    nullable: false
+                      nullable: false
               - column:
                   name: phone
                   type: varchar(20)
                   constraints:
-                    unique: true
-                    nullable: false
+                      unique: true
+                      nullable: false
               - column:
                   name: job_title
                   type: varchar(255)
+                  constraints:
+                      nullable: false
 
         - createTable:
             tableName: product_type
