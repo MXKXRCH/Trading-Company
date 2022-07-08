@@ -5,12 +5,14 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import ru.mak.tradingCompany.entity.Type;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 public class TypeDto extends BaseDto {
+    @NotNull
     @Size(min=3, max=64, message = "Minimum symbols: 3\nMaximum symbols: 64")
     private String name;
 

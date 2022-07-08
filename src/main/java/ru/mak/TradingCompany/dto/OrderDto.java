@@ -7,6 +7,7 @@ import ru.mak.tradingCompany.entity.Order;
 import ru.mak.tradingCompany.entity.OrderProduct;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -15,10 +16,12 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 public class OrderDto extends BaseDto {
+    @NotNull
     @NotBlank
     @Past(message = "Created date must be less or equals than today's date")
     private Date createdDate;
 
+    @NotNull
     @NotBlank
     @Past(message = "Created date must be less or equals than today's date")
     private Date completedDate;

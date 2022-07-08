@@ -31,6 +31,7 @@ public class Product extends Base {
 
     public Product(ProductDto productDto, Type type) {
         this.setId(productDto.getId());
+        this.name = productDto.getName();
         this.price = productDto.getPrice();
         this.type = type;
     }
